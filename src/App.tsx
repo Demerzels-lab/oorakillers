@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Skull, Zap, Target, AlertCircle } from 'lucide-react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { ChevronDown, Skull, Zap, Target, AlertCircle, Save, Share2, ImageIcon, Heart } from 'lucide-react';
+import { supabase } from './lib/supabase';
+import GalleryPage from './pages/GalleryPage';
 
 // Animal presets
 const HEADS = ['Tiger', 'Lion', 'Wolf', 'Bear', 'Crocodile', 'Shark', 'Eagle', 'Cobra'];
@@ -109,7 +112,9 @@ const PUNCHLINES = [
 
 interface GenerationResult {
   imageUrl: string;
-  animals: string[];
+  head: string;
+  body: string;
+  tail: string;
   biome: string;
   narrative: string;
 }
@@ -128,7 +133,9 @@ function generatePredator(head: string, body: string, tail: string): GenerationR
   
   return {
     imageUrl: `/images/${findBestMatch(head, body, tail)}`,
-    animals: [head.toLowerCase(), body.toLowerCase(), tail.toLowerCase()],
+    head,
+    body,
+    tail,
     biome,
     narrative,
   };
@@ -182,7 +189,7 @@ function Select({
   );
 }
 
-export default function App() {
+function HomePage() {
   const [head, setHead] = useState('');
   const [body, setBody] = useState('');
   const [tail, setTail] = useState('');
@@ -191,6 +198,10 @@ export default function App() {
   const [loadingFact, setLoadingFact] = useState('');
   const [error, setError] = useState('');
   const [showError, setShowError] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const [creatorName, setCreatorName] = useState('');
   
   const generatorRef = useRef<HTMLDivElement>(null);
   
@@ -212,6 +223,7 @@ export default function App() {
   const handleGenerate = () => {
     setError('');
     setShowError(false);
+    setSaved(false);
     
     if (!head || !body || !tail) {
       setError('Select all three components');
@@ -228,11 +240,63 @@ export default function App() {
       setLoading(false);
     }, delay);
   };
-  
-  const canGenerate = head && body && tail;
+
+  const handleSaveClick = () => {
+    setShowNamePrompt(true);
+  };
+
+  const handleSaveToGallery = async () => {
+    if (!result) return;
+    
+    setSaving(true);
+    const name = creatorName.trim() || 'Anonymous';
+    
+    const { error } = await supabase.from('predators').insert({
+      head: result.head,
+      body: result.body,
+      tail: result.tail,
+      biome: result.biome,
+      image_url: result.imageUrl,
+      narrative: result.narrative,
+      creator_name: name,
+      likes: 0,
+    });
+    
+    setSaving(false);
+    setShowNamePrompt(false);
+    
+    if (!error) {
+      setSaved(true);
+      setCreatorName('');
+    }
+  };
+
+  const shareToTwitter = () => {
+    if (!result) return;
+    const combo = `${result.head}+${result.body}+${result.tail}`;
+    const text = encodeURIComponent(
+      `I created a ${combo} predator on OORAKillers! \ud83d\udd25 Check it out!`
+    );
+    const url = encodeURIComponent(window.location.origin);
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+  };
 
   return (
     <div className="min-h-screen bg-dark-900 font-body">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-md border-b border-glass-border">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+          <span className="font-display text-xl text-primary-500">OORAKILLERS</span>
+          <Link
+            to="/gallery"
+            className="flex items-center gap-2 px-4 py-2 bg-dark-600 hover:bg-dark-500 text-dark-200 rounded-md transition-colors"
+          >
+            <ImageIcon className="w-4 h-4" />
+            Gallery
+          </Link>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image - Responsive hero */}
@@ -356,13 +420,39 @@ export default function App() {
               <p className="text-dark-200 text-lg leading-relaxed mb-6">
                 {result.narrative}
               </p>
-              <div className="flex flex-wrap items-center gap-2 text-sm text-dark-400">
+              <div className="flex flex-wrap items-center gap-2 text-sm text-dark-400 mb-6">
                 <span className="px-3 py-1 bg-primary-500/20 text-primary-500 rounded-full">
-                  {result.animals.join(' + ')}
+                  {result.head} + {result.body} + {result.tail}
                 </span>
                 <span className="px-3 py-1 bg-dark-600 text-dark-200 rounded-full">
                   Biome: {result.biome}
                 </span>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-3">
+                {!saved ? (
+                  <button
+                    onClick={handleSaveClick}
+                    disabled={saving}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors"
+                  >
+                    <Save className="w-4 h-4" />
+                    {saving ? 'Saving...' : 'Save to Gallery'}
+                  </button>
+                ) : (
+                  <span className="inline-flex items-center gap-2 px-6 py-3 bg-green-600/20 text-green-500 rounded-md">
+                    <Heart className="w-4 h-4 fill-green-500" />
+                    Saved!
+                  </span>
+                )}
+                <button
+                  onClick={shareToTwitter}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white rounded-md transition-colors"
+                >
+                  <Share2 className="w-4 h-4" />
+                  Share on Twitter
+                </button>
               </div>
             </div>
           )}
@@ -375,6 +465,48 @@ export default function App() {
           <p>OORAKILLERS - The Ultimate Predator Generator</p>
         </div>
       </footer>
+
+      {/* Name Prompt Modal */}
+      {showNamePrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-dark-900/80 backdrop-blur-sm">
+          <div className="bg-dark-800 border border-glass-border rounded-lg p-6 max-w-sm w-full mx-4 shadow-glass-card">
+            <h3 className="font-display text-lg text-dark-50 mb-4">Save to Gallery</h3>
+            <input
+              type="text"
+              placeholder="Your name (optional)"
+              value={creatorName}
+              onChange={(e) => setCreatorName(e.target.value)}
+              className="w-full px-4 py-3 bg-dark-600 border border-glass-border rounded-md text-dark-50 placeholder-dark-400 mb-4 focus:outline-none focus:border-primary-500"
+            />
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowNamePrompt(false)}
+                className="flex-1 px-4 py-2 bg-dark-600 hover:bg-dark-500 text-dark-200 rounded-md transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveToGallery}
+                disabled={saving}
+                className="flex-1 px-4 py-2 bg-primary-500 hover:bg-primary-700 text-white rounded-md transition-colors"
+              >
+                {saving ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
