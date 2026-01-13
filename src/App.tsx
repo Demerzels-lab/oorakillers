@@ -140,8 +140,9 @@ function HomePage() {
 
       {/* --- SECTION 1: CONTAINMENT CARD (HERO) --- */}
       <section className="pt-24 pb-12 px-4 flex justify-center bg-[#050505]">
-        <div className="w-full max-w-4xl border-4 border-[#222] bg-[#0a0a0a] shadow-2xl relative overflow-hidden">
+        <div className="w-full max-w-6xl border-4 border-[#222] bg-[#0a0a0a] shadow-2xl relative overflow-hidden">
           
+          {/* Card Header */}
           <div className="bg-[#111] p-4 border-b-2 border-[#333] flex justify-between items-center">
              <h1 className="font-display font-black text-3xl md:text-5xl text-white">
                <span className="blink-text text-[#DC2626] mr-2">⚠</span>
@@ -153,29 +154,61 @@ function HomePage() {
              </div>
           </div>
 
+          {/* Status Window (Split View) */}
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-5/12 p-6 bg-[#080808] flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#333]">
-              <div className="mugshot-frame w-full max-w-sm aspect-[4/5] relative">
-                <img src="/images/hero_canonical_2048.png" className="w-full h-full object-cover opacity-90 grayscale contrast-125" alt="Subject" />
+            
+            {/* Mugshot Column (Widened to 6/12 and changed aspect ratio) */}
+            <div className="md:w-6/12 p-6 bg-[#080808] flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#333]">
+              {/* Changed max-w-sm to max-w-full and aspect-[4/5] to aspect-video */}
+              <div className="mugshot-frame w-full relative shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                <img 
+                  src="/images/hero_canonical_desktop.png" 
+                  className="w-full h-auto object-contain opacity-90 grayscale contrast-125" 
+                  alt="Subject" 
+                />
                 <div className="glass-overlay absolute inset-0"></div>
                 <div className="absolute top-2 right-2 stamp text-[#DC2626] border-[#DC2626] text-xs">ESCAPED</div>
-                <div className="absolute bottom-0 left-0 right-0 timestamp-plate">JAIL 50:02 | 1 13 26</div>
+                
+                {/* OORA Timestamp Plate */}
+                <div className="absolute bottom-0 left-0 right-0 timestamp-plate text-xs md:text-sm">
+                  JAIL 50:02 | 1 13 26
+                </div>
               </div>
             </div>
 
-            <div className="md:w-7/12 p-6 bg-[#0a0a0a] flex flex-col justify-center">
+            {/* Data Column (Adjusted to 6/12 to match) */}
+            <div className="md:w-6/12 p-6 bg-[#0a0a0a] flex flex-col justify-center">
                <div className="mb-6">
-                 <div className="data-row"><span className="data-label">ASSET:</span><span className="data-value text-white">$OORA (HYBRID)</span></div>
-                 <div className="data-row"><span className="data-label">STATUS:</span><span className="data-value text-[#DC2626] blink-text">CONTAINMENT FAILED</span></div>
-                 <div className="data-row"><span className="data-label">THREAT:</span><span className="data-value text-[#DC2626]">MAXIMUM</span></div>
-                 <div className="data-row"><span className="data-label">LAST SEEN:</span><span className="data-value text-[#666]">SECTOR 7 (JUNGLE)</span></div>
+                 <div className="data-row">
+                   <span className="data-label">ASSET:</span>
+                   <span className="data-value text-white">$OORA (HYBRID)</span>
+                 </div>
+                 <div className="data-row">
+                   <span className="data-label">STATUS:</span>
+                   <span className="data-value text-[#DC2626] blink-text">CONTAINMENT FAILED</span>
+                 </div>
+                 <div className="data-row">
+                   <span className="data-label">THREAT:</span>
+                   <span className="data-value text-[#DC2626]">MAXIMUM</span>
+                 </div>
+                 <div className="data-row">
+                   <span className="data-label">LAST SEEN:</span>
+                   <span className="data-value text-[#666]">SECTOR 7 (JUNGLE)</span>
+                 </div>
                </div>
+
                <div className="bg-[#111] p-4 border border-[#333] mb-6">
                  <p className="font-mono text-xs text-[#888] leading-relaxed">
                    <span className="text-[#DC2626] font-bold">&gt;&gt; ALERT:</span> Subject has breached containment. Conventional weapons ineffective. Authorization granted to generate genetic countermeasures immediately.
                  </p>
                </div>
-               <button onClick={scrollToGenerator} className="brutalist-button w-full text-center">INITIATE GENERATOR</button>
+
+               <button 
+                 onClick={scrollToGenerator}
+                 className="brutalist-button w-full text-center"
+               >
+                 INITIATE GENERATOR
+               </button>
             </div>
           </div>
         </div>
@@ -266,7 +299,7 @@ function HomePage() {
             </div>
 
             <div className="bg-white p-3 shadow-lg transform rotate-[-1deg] max-w-sm mx-auto mb-8 border border-gray-200">
-              <div className="aspect-square bg-[#111] overflow-hidden relative">
+              <div className="bg-[#111] overflow-hidden relative">
                  {loading ? (
                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white font-mono text-xs">
                      <div className="w-12 h-12 border-4 border-[#DC2626] border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -274,7 +307,7 @@ function HomePage() {
                      <div className="mt-2 text-[#666] text-center px-4">{loadingFact}</div>
                    </div>
                  ) : result ? (
-                   <img src={result.imageUrl} className="w-full h-full object-cover" alt="Result" />
+                   <img src={result.imageUrl} className="w-full h-auto object-contain" alt="Result" />
                  ) : (
                    <div className="w-full h-full flex items-center justify-center text-[#333] font-mono uppercase text-sm">
                      [ AWAITING INPUT ]
