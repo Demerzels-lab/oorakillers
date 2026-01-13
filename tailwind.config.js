@@ -17,11 +17,18 @@ module.exports = {
 		},
 		extend: {
 			colors: {
+				// OORA Red / Alert Theme
 				primary: {
 					50: '#FFF1F2',
-					500: '#DC2626',
+					500: '#DC2626', // Main Alert Red
 					700: '#B91C1C',
 					900: '#7F1D1D',
+				},
+				// Sci-Fi / Terminal Colors
+				terminal: {
+					green: '#00FF00', // CRT Green
+					black: '#0a0a0a', // Deep background
+					frame: '#1a1a1a', // UI Borders
 				},
 				dark: {
 					50: 'rgba(255, 255, 255, 0.95)',
@@ -29,43 +36,42 @@ module.exports = {
 					400: 'rgba(255, 255, 255, 0.4)',
 					600: '#1F2937',
 					800: '#111827',
-					900: '#0A0E1A',
+					900: '#050505', // Darker base for OORA theme
 				},
 				glass: {
-					surface: 'rgba(30, 41, 59, 0.5)',
+					surface: 'rgba(10, 10, 10, 0.8)', // Darker glass
 					border: 'rgba(255, 255, 255, 0.1)',
 					highlight: 'rgba(255, 255, 255, 0.05)',
 				},
 			},
 			fontFamily: {
-				display: ['Orbitron', 'sans-serif'],
+				display: ['Orbitron', 'sans-serif'], // Headers
 				body: ['Inter', 'system-ui', 'sans-serif'],
+				mono: ['Courier Prime', 'Courier New', 'monospace'], // Data/Stats
+			},
+			backgroundImage: {
+				'grid-pattern': "radial-gradient(#333 1px, transparent 1px)",
 			},
 			borderRadius: {
-				sm: '8px',
-				md: '12px',
-				lg: '16px',
-				xl: '24px',
-			},
-			backdropBlur: {
-				sm: '12px',
-				md: '20px',
-				lg: '32px',
-				xl: '48px',
-			},
-			boxShadow: {
-				'glass-sm': '0 2px 8px rgba(220, 38, 38, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1)',
-				'glass-card': '0 4px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-				'glass-card-hover': '0 8px 40px rgba(220, 38, 38, 0.25), 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(220, 38, 38, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+				sm: '4px', // Sharper corners for tech look
+				md: '8px',
+				lg: '12px',
+				xl: '20px',
 			},
 			keyframes: {
 				shimmer: {
 					'0%': { backgroundPosition: '-200% 0' },
 					'100%': { backgroundPosition: '200% 0' },
 				},
+				// Add blink for "WARNING" text
+				blink: {
+					'0%, 100%': { opacity: 1 },
+					'50%': { opacity: 0 },
+				}
 			},
 			animation: {
 				shimmer: 'shimmer 1.5s infinite',
+				blink: 'blink 1s step-end infinite',
 			},
 		},
 	},

@@ -1,23 +1,136 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;900&family=Courier+Prime:wght@400;700&family=Black+Ops+One&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  
+  html { scroll-behavior: smooth; }
   body {
-    @apply bg-dark-900 text-dark-50 antialiased;
+    @apply bg-black text-white antialiased overflow-x-hidden;
+    background-color: #050505;
   }
 }
 
 @layer utilities {
-  .animate-shimmer {
-    animation: shimmer 1.5s infinite;
-    background: linear-gradient(90deg, #111827 0%, #1F2937 50%, #111827 100%);
-    background-size: 200% 100%;
+  /* --- OORA CRT EFFECTS --- */
+  .crt-scanlines {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.3) 50%,
+      rgba(0,0,0,0.3)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  .crt-vignette {
+    background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,1) 100%);
+    pointer-events: none;
+    z-index: 51;
+  }
+
+  /* --- SPECIFIC OORA UI ELEMENTS --- */
+  
+  /* The blinking red header text */
+  .blink-text {
+    animation: blink-animation 1s steps(2, start) infinite;
+  }
+  @keyframes blink-animation {
+    to { visibility: hidden; }
+  }
+
+  /* The "Mugshot" Frame */
+  .mugshot-frame {
+    position: relative;
+    border: 4px solid #333;
+    background: #000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  }
+  
+  /* The "Glass" Overlay on images */
+  .glass-overlay {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
+  }
+
+  /* The specific timestamp plate at the bottom of the image */
+  .timestamp-plate {
+    background: #111;
+    color: #DC2626; /* OORA Red */
+    font-family: 'Courier Prime', monospace;
+    font-weight: bold;
+    text-align: center;
+    padding: 0.5rem;
+    border-top: 2px solid #333;
+    text-shadow: 0 0 5px rgba(220, 38, 38, 0.5);
+    letter-spacing: 0.1em;
+  }
+
+  /* High Visibility Data Rows */
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding: 0.75rem 0;
+    font-family: 'Courier Prime', monospace;
+  }
+  
+  .data-label {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .data-value {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* The "Manila Folder" Background */
+  .manila-folder {
+    background-color: #F0E6D2;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    color: #1a1a1a;
+    position: relative;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+  }
+
+  /* Top Secret Stamp */
+  .stamp {
+    font-family: 'Black Ops One', cursive;
+    text-transform: uppercase;
+    border: 4px solid;
+    padding: 0.25rem 1rem;
+    transform: rotate(-10deg);
+    mix-blend-mode: multiply;
+    opacity: 0.8;
+  }
+
+  /* Brutalist Button */
+  .brutalist-button {
+    background: #DC2626;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border: 2px solid #fff;
+    box-shadow: 4px 4px 0px #fff;
+    transition: all 0.1s;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+  }
+  .brutalist-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #fff;
+    background: #ef4444;
+  }
+  .brutalist-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #fff;
   }
 }
