@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { ChevronDown, Skull, Zap, Target, AlertCircle, Save, Share2, ImageIcon, Heart, Activity, Lock, AlertTriangle, FileText, Search, Radio, Wifi } from 'lucide-react';
+import { ChevronDown, Skull, Zap, Target, AlertCircle, Save, Share2, ImageIcon, Heart, Activity, Lock, AlertTriangle, FileText, Search, Radio, Wifi, Copy } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import GalleryPage from './pages/GalleryPage';
 
@@ -359,6 +359,23 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* --- CA SECTION --- */}
+      {/* <section className="py-12 bg-[#020202] border-t border-b border-[#222]">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-[#111] p-4 border border-[#333]">
+            <div className="data-row">
+              <span className="data-label">CONTRACT ADDRESS:</span>
+              <div className="flex items-center">
+                <span className="data-value text-white">0xDummyAddress1234567890ABCDEF</span>
+                <button onClick={() => navigator.clipboard.writeText('0xDummyAddress1234567890ABCDEF')} className="ml-2 text-[#666] hover:text-white">
+                  <Copy className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> */}
 
       {/* --- FOOTER --- */}
       <footer className="bg-[#111] border-t border-[#333] py-8 text-center">
