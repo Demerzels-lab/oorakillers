@@ -131,9 +131,9 @@ function HomePage() {
       <nav className="fixed top-0 w-full z-40 bg-black/90 border-b border-[#333] px-4 py-2 flex justify-between items-center">
          <div className="font-display font-black text-xl text-[#DC2626] tracking-tighter flex items-center gap-2">
            <Radio className="w-5 h-5 animate-pulse" />
-           $OORAKILLERS <span className="text-white text-xs align-top font-mono ml-2 opacity-50">BREACH_PROTOCOL_V2</span>
+           OORAKILLERS 
          </div>
-         <Link to="/gallery" className="font-mono text-xs text-[#666] hover:text-white hover:underline flex items-center gap-1 border border-[#333] px-2 py-1 rounded-sm">
+         <Link to="/gallery" className="font-mono font-bold text-sm text-gray-200 hover:text-white hover:underline flex items-center gap-1 border border-[#333] px-2 py-1 rounded-sm">
            <Search className="w-3 h-3" /> ARCHIVE_DB
          </Link>
       </nav>
@@ -340,6 +340,18 @@ function HomePage() {
                    className="border-2 border-[#1a1a1a] text-[#1a1a1a] font-mono font-bold uppercase px-8 py-3 hover:bg-[#1a1a1a] hover:text-white transition-colors"
                  >
                    ARCHIVE TO FILE
+                 </button>
+               )}
+               
+               {result && (
+                 <button 
+                   onClick={() => {
+                     const text = encodeURIComponent(`Check out this OORA killer I created: ${result.narrative}`);
+                     window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+                   }}
+                   className="border-2 border-[#1a1a1a] text-[#1a1a1a] font-mono font-bold uppercase px-8 py-3 hover:bg-[#1a1a1a] hover:text-white transition-colors flex items-center gap-2"
+                 >
+                   <Share2 className="w-4 h-4" /> SHARE TO X
                  </button>
                )}
             </div>
