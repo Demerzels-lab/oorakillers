@@ -133,8 +133,8 @@ function HomePage() {
            <Radio className="w-5 h-5 animate-pulse" />
            OORAKILLERS 
          </div>
-         <Link to="/gallery" className="font-mono font-bold text-sm text-gray-200 hover:text-white hover:underline flex items-center gap-1 border border-[#333] px-2 py-1 rounded-sm">
-           <Search className="w-3 h-3" /> ARCHIVE_DB
+         <Link to="/gallery" className="font-mono font-bold text-sm text-white hover:text-[#DC2626] hover:underline flex items-center gap-1 border-2 border-[#DC2626] px-3 py-2 rounded-sm bg-[#DC2626]/20 animate-pulse">
+           <Search className="w-4 h-4" /> ARCHIVE_DB
          </Link>
       </nav>
 
@@ -322,6 +322,15 @@ function HomePage() {
             {result && (
               <div className="bg-white/50 border border-[#dcd0b0] p-4 mb-8 font-mono text-sm leading-relaxed text-[#333]">
                 <p><span className="font-bold">NARRATIVE LOG:</span> {result.narrative}</p>
+              </div>
+            )}
+
+            {result && (
+              <div className="bg-[#DC2626]/10 border border-[#DC2626] p-4 mb-8 text-center">
+                <p className="font-mono text-sm text-[#DC2626] font-bold mb-2">⚠ ARCHIVE_DB ACCESS GRANTED</p>
+                <Link to="/gallery" className="inline-block bg-[#DC2626] text-white font-mono font-bold uppercase px-6 py-2 hover:bg-red-600 transition-colors border-2 border-[#DC2626]">
+                  VIEW ARCHIVE_DB
+                </Link>
               </div>
             )}
 
