@@ -203,6 +203,17 @@ function HomePage() {
                  </p>
                </div>
 
+               <div className="bg-[#DC2626] p-4 mb-6 text-center border border-[#DC2626]">
+                 <a 
+                   href="https://x.com/oorakillers" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="font-mono font-bold text-white text-sm hover:text-black transition-colors inline-block"
+                 >
+                   FOLLOW @OORAKILLERS ON X FOR UPDATES
+                 </a>
+               </div>
+
                <button 
                  onClick={scrollToGenerator}
                  className="brutalist-button w-full text-center"
