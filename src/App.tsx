@@ -381,21 +381,21 @@ function HomePage() {
       </section>
 
       {/* --- CA SECTION --- */}
-      {/* <section className="py-12 bg-[#020202] border-t border-b border-[#222]">
+      <section className="py-12 bg-[#020202] border-t border-b border-[#222]">
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-[#111] p-4 border border-[#333]">
             <div className="data-row">
               <span className="data-label">CONTRACT ADDRESS:</span>
               <div className="flex items-center">
-                <span className="data-value text-white">0xDummyAddress1234567890ABCDEF</span>
-                <button onClick={() => navigator.clipboard.writeText('0xDummyAddress1234567890ABCDEF')} className="ml-2 text-[#666] hover:text-white">
+                <span className="data-value text-white">9PNJKoBnAjABaWjmD2t36NLL8Q4pfNPj6asHeztDpump</span>
+                <button onClick={() => navigator.clipboard.writeText('9PNJKoBnAjABaWjmD2t36NLL8Q4pfNPj6asHeztDpump')} className="ml-2 text-[#666] hover:text-white">
                   <Copy className="w-4 h-4" />
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* --- FOOTER --- */}
       <footer className="bg-[#111] border-t border-[#333] py-8 text-center">
